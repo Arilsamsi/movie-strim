@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Bookmark, Trash2 } from "lucide-react";
+import { Bookmark } from "lucide-react";
 import type { Movie } from "../types/tmdb";
 import api from "../services/tmdb";
 import MovieCard from "../components/MovieCard";
