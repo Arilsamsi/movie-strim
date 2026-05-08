@@ -48,7 +48,7 @@ export default function Navbar() {
           </Link>
 
           <div className="hidden md:flex items-center gap-6">
-            {links.map((l) => (
+            {links?.map((l) => (
               <Link
                 key={l.to}
                 to={l.to}
@@ -105,7 +105,7 @@ export default function Navbar() {
                   className="w-full bg-white/10 border border-white/10 rounded-full pl-9 pr-4 py-2 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-blue-500/50"
                 />
               </form>
-              {links.map((l) => (
+              {links?.map((l) => (
                 <Link
                   key={l.to}
                   to={l.to}
@@ -115,6 +115,7 @@ export default function Navbar() {
                   {l.label === "Watchlist" && <Bookmark className="w-4 h-4" />}
                   {l.label === "Search" && <Search className="w-4 h-4" />}
                   {l.label === "Home" && <Film className="w-4 h-4" />}
+
                   <span className="text-sm font-medium">{l.label}</span>
                 </Link>
               ))}

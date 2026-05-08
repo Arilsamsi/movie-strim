@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Bookmark, Trash2 } from 'lucide-react';
-import type { Movie } from '../types/tmdb';
-import api from '../services/tmdb';
-import MovieCard from '../components/MovieCard';
-import SkeletonCard from '../components/SkeletonCard';
-import { useWatchlist } from '../hooks/useWatchlist';
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Bookmark, Trash2 } from "lucide-react";
+import type { Movie } from "../types/tmdb";
+import api from "../services/tmdb";
+import MovieCard from "../components/MovieCard";
+import SkeletonCard from "../components/SkeletonCard";
+import { useWatchlist } from "../hooks/useWatchlist";
 
 export default function Watchlist() {
   const { list, isSaved, toggle } = useWatchlist();
@@ -24,8 +24,8 @@ export default function Watchlist() {
         api
           .get<Movie>(`/movie/${id}`)
           .then((r) => r.data)
-          .catch(() => null)
-      )
+          .catch(() => null),
+      ),
     )
       .then((results) => setMovies(results.filter(Boolean) as Movie[]))
       .finally(() => setLoading(false));
@@ -37,7 +37,9 @@ export default function Watchlist() {
         <div className="flex items-center gap-3 mb-8">
           <Bookmark className="w-7 h-7 text-blue-500" />
           <h1 className="text-3xl font-bold text-white">My Watchlist</h1>
-          <span className="text-gray-500 text-sm ml-2">({list.length} items)</span>
+          <span className="text-gray-500 text-sm ml-2">
+            ({list.length} items)
+          </span>
         </div>
 
         {loading ? (
@@ -53,14 +55,16 @@ export default function Watchlist() {
             className="text-center py-20"
           >
             <Bookmark className="w-16 h-16 mx-auto mb-4 text-gray-700" />
-            <p className="text-gray-400 text-lg mb-2">Your watchlist is empty</p>
+            <p className="text-gray-400 text-lg mb-2">
+              Your watchlist is empty
+            </p>
             <p className="text-gray-600 text-sm">
               Start adding movies and TV shows to your watchlist
             </p>
           </motion.div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-6">
-            {movies.map((movie, i) => (
+            {movies?.map((movie, i) => (
               <MovieCard
                 key={movie.id}
                 movie={movie}
