@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import type { Movie } from '../types/tmdb';
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import type { Movie } from "../types/tmdb";
 import {
   fetchTrending,
   fetchPopular,
   fetchTopRated,
   fetchUpcoming,
   fetchTrendingTV,
-} from '../services/tmdb';
-import HeroBanner from '../components/HeroBanner';
-import MovieCarousel from '../components/MovieCarousel';
-import SkeletonCard from '../components/SkeletonCard';
-import { useWatchlist } from '../hooks/useWatchlist';
+} from "../services/tmdb";
+import HeroBanner from "../components/HeroBanner";
+import MovieCarousel from "../components/MovieCarousel";
+import SkeletonCard from "../components/SkeletonCard";
+import { useWatchlist } from "../hooks/useWatchlist";
 
 function SkeletonRow() {
   return (
@@ -68,8 +68,14 @@ export default function Home() {
   }
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-      <HeroBanner movies={trending.slice(0, 5)} />
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <HeroBanner
+        movies={Array.isArray(trending) ? trending.slice(0, 5) : []}
+      />
 
       <div className="-mt-8 relative z-10">
         <MovieCarousel

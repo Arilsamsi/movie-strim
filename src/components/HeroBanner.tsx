@@ -1,10 +1,10 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Star, ChevronLeft, ChevronRight } from 'lucide-react';
-import type { Movie } from '../types/tmdb';
-import { imgSrc } from '../services/tmdb';
-import { getTitle, getYear, formatRating } from '../utils/helpers';
+import { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { Play, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import type { Movie } from "../types/tmdb";
+import { imgSrc } from "../services/tmdb";
+import { getTitle, getYear, formatRating } from "../utils/helpers";
 
 interface Props {
   movies: Movie[];
@@ -44,7 +44,9 @@ export default function HeroBanner({ movies }: Props) {
         >
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${imgSrc(movie.backdrop_path, 'original')})` }}
+            style={{
+              backgroundImage: `url(${imgSrc(movie.backdrop_path, "original")})`,
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/60 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-gray-950/80 via-transparent to-transparent" />
@@ -81,7 +83,7 @@ export default function HeroBanner({ movies }: Props) {
             </p>
             <div className="flex items-center gap-3">
               <Link
-                to={`/${movie.media_type === 'tv' ? 'tv' : 'movie'}/${movie.id}`}
+                to={`/${movie.media_type === "tv" ? "tv" : "movie"}/${movie.id}`}
                 className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-lg font-medium transition-all hover:shadow-lg hover:shadow-blue-500/25"
               >
                 <Play className="w-4 h-4 fill-white" />
@@ -100,15 +102,18 @@ export default function HeroBanner({ movies }: Props) {
           <ChevronLeft className="w-5 h-5" />
         </button>
         <div className="flex items-center gap-1.5 mx-2">
-          {movies.slice(0, 5).map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrent(i)}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                i === current ? 'w-6 bg-blue-500' : 'w-1.5 bg-white/30'
-              }`}
-            />
-          ))}
+          {Array.isArray(movies) &&
+            movies
+              .slice(0, 5)
+              .map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrent(i)}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    i === current ? "w-6 bg-blue-500" : "w-1.5 bg-white/30"
+                  }`}
+                />
+              ))}
         </div>
         <button
           onClick={next}

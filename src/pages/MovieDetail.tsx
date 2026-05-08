@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import {
   Star,
   Clock,
@@ -9,13 +9,18 @@ import {
   Heart,
   ArrowLeft,
   Film,
-} from 'lucide-react';
-import type { MovieDetail as MovieDetailType } from '../types/tmdb';
-import { fetchMovieDetail, fetchTVDetail, imgSrc } from '../services/tmdb';
-import { formatRating, formatRuntime, formatDate, getTitle } from '../utils/helpers';
-import { useWatchlist } from '../hooks/useWatchlist';
-import TrailerModal from '../components/TrailerModal';
-import MovieCarousel from '../components/MovieCarousel';
+} from "lucide-react";
+import type { MovieDetail as MovieDetailType } from "../types/tmdb";
+import { fetchMovieDetail, fetchTVDetail, imgSrc } from "../services/tmdb";
+import {
+  formatRating,
+  formatRuntime,
+  formatDate,
+  getTitle,
+} from "../utils/helpers";
+import { useWatchlist } from "../hooks/useWatchlist";
+import TrailerModal from "../components/TrailerModal";
+import MovieCarousel from "../components/MovieCarousel";
 
 export default function MovieDetailPage() {
   const { id, type } = useParams<{ id: string; type: string }>();
@@ -28,16 +33,22 @@ export default function MovieDetailPage() {
   useEffect(() => {
     if (!id) return;
     setLoading(true);
-    const fetcher = type === 'tv' ? fetchTVDetail : fetchMovieDetail;
+    const fetcher = type === "tv" ? fetchTVDetail : fetchMovieDetail;
     fetcher(Number(id))
       .then((r) => {
         setDetail(r.data);
         const trailer = r.data.videos?.results?.find(
-          (v) => v.site === 'YouTube' && (v.type === 'Trailer' || v.type === 'Teaser')
+          (v) =>
+            v.site === "YouTube" &&
+            (v.type === "Trailer" || v.type === "Teaser"),
         );
         if (trailer) setTrailerKey(trailer.key);
       })
-      .catch((err) => setError(err.response?.data?.status_message || 'Failed to load details'))
+      .catch((err) =>
+        setError(
+          err.response?.data?.status_message || "Failed to load details",
+        ),
+      )
       .finally(() => setLoading(false));
   }, [id, type]);
 
@@ -57,8 +68,11 @@ export default function MovieDetailPage() {
   if (error || !detail) {
     return (
       <div className="pt-24 min-h-screen flex flex-col items-center justify-center text-gray-400">
-        <p className="text-lg mb-4">{error || 'Movie not found'}</p>
-        <Link to="/" className="text-blue-400 hover:text-blue-300 flex items-center gap-2">
+        <p className="text-lg mb-4">{error || "Movie not found"}</p>
+        <Link
+          to="/"
+          className="text-blue-400 hover:text-blue-300 flex items-center gap-2"
+        >
           <ArrowLeft className="w-4 h-4" /> Back to Home
         </Link>
       </div>
@@ -68,12 +82,18 @@ export default function MovieDetailPage() {
   const saved = isSaved(detail.id);
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       {/* Backdrop */}
       <div className="relative h-[55vh] min-h-[400px] max-h-[700px]">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${imgSrc(detail.backdrop_path, 'original')})` }}
+          style={{
+            backgroundImage: `url(${imgSrc(detail.backdrop_path, "original")})`,
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/70 to-gray-950/30" />
       </div>
@@ -96,7 +116,9 @@ export default function MovieDetailPage() {
               {getTitle(detail)}
             </h1>
             {detail.tagline && (
-              <p className="text-blue-400 italic text-sm mb-4">"{detail.tagline}"</p>
+              <p className="text-blue-400 italic text-sm mb-4">
+                "{detail.tagline}"
+              </p>
             )}
 
             <div className="flex flex-wrap items-center gap-3 mb-5">
@@ -112,7 +134,7 @@ export default function MovieDetailPage() {
               )}
               <span className="flex items-center gap-1 text-gray-400 text-sm">
                 <Calendar className="w-4 h-4" />
-                {formatDate(detail.release_date || detail.first_air_date || '')}
+                {formatDate(detail.release_date || detail.first_air_date || "")}
               </span>
             </div>
 
@@ -143,18 +165,20 @@ export default function MovieDetailPage() {
                 onClick={() => toggle(detail.id)}
                 className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium transition-all border ${
                   saved
-                    ? 'bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20'
-                    : 'bg-white/5 border-white/10 text-gray-300 hover:text-white hover:border-white/20'
+                    ? "bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20"
+                    : "bg-white/5 border-white/10 text-gray-300 hover:text-white hover:border-white/20"
                 }`}
               >
-                <Heart className={`w-4 h-4 ${saved ? 'fill-red-400' : ''}`} />
-                {saved ? 'In Watchlist' : 'Add to Watchlist'}
+                <Heart className={`w-4 h-4 ${saved ? "fill-red-400" : ""}`} />
+                {saved ? "In Watchlist" : "Add to Watchlist"}
               </button>
             </div>
 
             {/* Overview */}
             <div className="mb-8">
-              <h3 className="text-lg font-semibold text-white mb-2">Overview</h3>
+              <h3 className="text-lg font-semibold text-white mb-2">
+                Overview
+              </h3>
               <p className="text-gray-400 leading-relaxed">{detail.overview}</p>
             </div>
           </div>
@@ -165,12 +189,15 @@ export default function MovieDetailPage() {
           <section className="mt-10">
             <h3 className="text-xl font-bold text-white mb-4">Cast</h3>
             <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-              {detail.credits.cast.slice(0, 15).map((person) => (
-                <div key={person.id} className="flex-shrink-0 w-28 text-center group">
+              {detail?.credits?.cast?.slice(0, 15)?.map((person) => (
+                <div
+                  key={person.id}
+                  className="flex-shrink-0 w-28 text-center group"
+                >
                   <div className="w-24 h-24 mx-auto rounded-full overflow-hidden bg-gray-800 mb-2">
                     {person.profile_path ? (
                       <img
-                        src={imgSrc(person.profile_path, 'w185')}
+                        src={imgSrc(person.profile_path, "w185")}
                         alt={person.name}
                         className="w-full h-full object-cover"
                         loading="lazy"
@@ -181,8 +208,14 @@ export default function MovieDetailPage() {
                       </div>
                     )}
                   </div>
-                  <p className="text-white text-xs font-medium line-clamp-1">{person.name}</p>
-                  <p className="text-gray-500 text-[10px] line-clamp-1">{person.character}</p>
+
+                  <p className="text-white text-xs font-medium line-clamp-1">
+                    {person.name}
+                  </p>
+
+                  <p className="text-gray-500 text-[10px] line-clamp-1">
+                    {person.character}
+                  </p>
                 </div>
               ))}
             </div>
@@ -202,10 +235,7 @@ export default function MovieDetailPage() {
         )}
       </div>
 
-      <TrailerModal
-        videoKey={trailerKey}
-        onClose={() => setTrailerKey(null)}
-      />
+      <TrailerModal videoKey={trailerKey} onClose={() => setTrailerKey(null)} />
     </motion.div>
   );
 }
