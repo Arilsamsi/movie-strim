@@ -36,7 +36,7 @@ export default function Watchlist() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center gap-3 mb-8">
           <Bookmark className="w-7 h-7 text-blue-500" />
-          <h1 className="text-3xl font-bold text-white">My Watchlist</h1>
+          <h1 className="text-3xl font-bold text-white">Watchlist</h1>
           <span className="text-gray-500 text-sm ml-2">
             ({list.length} items)
           </span>

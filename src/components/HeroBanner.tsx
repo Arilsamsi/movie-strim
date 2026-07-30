@@ -87,7 +87,6 @@ export default function HeroBanner({ movies }: Props) {
                 className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-lg font-medium transition-all hover:shadow-lg hover:shadow-blue-500/25"
               >
                 <Play className="w-4 h-4 fill-white" />
-                More Details
               </Link>
             </div>
           </motion.div>
