@@ -161,17 +161,30 @@ export default function MovieDetailPage() {
                   Play Trailer
                 </button>
               )}
-              <button
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 onClick={() => toggle(detail.id)}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium transition-all border ${
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium transition-colors border ${
                   saved
-                    ? "bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20"
+                    ? "bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20 shadow-lg shadow-red-500/10"
                     : "bg-white/5 border-white/10 text-gray-300 hover:text-white hover:border-white/20"
                 }`}
               >
-                <Heart className={`w-4 h-4 ${saved ? "fill-red-400" : ""}`} />
-                {saved ? "In Watchlist" : "Add to Watchlist"}
-              </button>
+                <motion.div
+                  key={saved ? "saved" : "not-saved"}
+                  initial={{ scale: 0.6 }}
+                  animate={{ scale: [0.6, 1.2, 1] }} // Efek membal (heartbeat pulse)
+                  transition={{ duration: 0.3 }}
+                >
+                  <Heart
+                    className={`w-4 h-4 ${saved ? "fill-red-400 text-red-400" : ""}`}
+                  />
+                </motion.div>
+
+                <span>{saved ? "In Watchlist" : "Add to Watchlist"}</span>
+              </motion.button>
             </div>
 
             {/* Overview */}

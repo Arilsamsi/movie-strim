@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Star, Bookmark, Heart } from "lucide-react";
+import { Star, Bookmark, BookmarkCheck } from "lucide-react";
 import type { Movie } from "../types/tmdb";
 import { imgSrc } from "../services/tmdb";
 import { getTitle, getYear, formatRating } from "../utils/helpers";
@@ -44,20 +44,30 @@ export default function MovieCard({
           </div>
 
           {onToggleWatchlist && (
-            <button
+            <motion.button
+              whileHover={{ scale: 1.15 }}
+              whileTap={{ scale: 0.85 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 onToggleWatchlist(movie.id);
               }}
-              className="absolute top-2 right-2 p-1.5 rounded-full bg-black/60 backdrop-blur-sm text-white/70 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100"
+              className="absolute top-2 right-2 p-1.5 rounded-full bg-black/60 backdrop-blur-sm text-white/70 hover:text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity"
             >
-              {isSaved ? (
-                <Heart className="w-4 h-4 fill-red-400 text-red-400" />
-              ) : (
-                <Bookmark className="w-4 h-4" />
-              )}
-            </button>
+              <motion.div
+                key={isSaved ? "saved" : "not-saved"}
+                initial={{ scale: 0.5, rotate: -30 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ duration: 0.15 }}
+              >
+                {isSaved ? (
+                  <BookmarkCheck className="w-4 h-4 fill-white-400 text-blue-400" />
+                ) : (
+                  <Bookmark className="w-4 h-4" />
+                )}
+              </motion.div>
+            </motion.button>
           )}
 
           <div className="absolute bottom-0 left-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
